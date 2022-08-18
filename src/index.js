@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 import flavoursRouter from './routes/flavoursRoutes.js';
 import cakesRouter from './routes/cakesRoutes.js';
+import clientsRouter from './routes/clientsRouter.js';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ server.use(cors());
 
 server.use(flavoursRouter);
 server.use(cakesRouter);
+server.use(clientsRouter);
 
 server.listen(PORT, () => {
     console.log(`Servidor funcionando na porta ${PORT}`);
