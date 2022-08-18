@@ -14,8 +14,8 @@ export async function addClient(req, res) {
 export async function getClientOrders(req, res) {
     const { id } = req.params;
 
-    if (!id) {
-        return res.status(404).send("On getClientOrders: id não encontrada!");
+    if (!id || isNaN(Number(id))) {
+        return res.status(400).send("On getClientOrders: id não encontrada ou inválida!");
     }
 
     try {

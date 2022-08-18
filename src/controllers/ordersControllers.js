@@ -1,4 +1,4 @@
-import { insertOrder, findOrders, findOrderById } from '../repositories/ordersRepository.js';
+import { insertOrder, findOrders, findOrderById, updateDeliverStatus } from '../repositories/ordersRepository.js';
 
 export async function placeOrder(req, res) {
     const { order } = res.locals;
@@ -18,7 +18,7 @@ export async function getOrders(req, res) {
         const { rows: result } = await findOrders(date);
 
         if (result.length === 0) {
-            return res.status(404).send("On getOrders: nenhum pedido encontrado!");
+            return res.status(400).send("On getOrders: nenhum pedido encontrado!");
         }
 
         res.status(200).send(result.map((order) => {
@@ -52,8 +52,8 @@ export async function getOrders(req, res) {
 export async function getSingleOrder(req, res) {
     const { id } = req.params;
 
-    if (!id) {
-        return res.status(404).send("On getSingleOrder: id não encontrado!");
+    if (!id || isNaN(Number(id))) {
+        return res.status(400).send("On getSingleOrder: id não encontrado ou inválido!");
     }
 
     try {
@@ -88,5 +88,26 @@ export async function getSingleOrder(req, res) {
         }));
     } catch (err) {
         res.status(500).send("On getSingleOrder: " + err);
+    }
+}
+
+export async function deliverOrder(req, res) {
+    const { id } = req.params;
+
+    if (!id || isNaN(Number(id))) {
+        return res.status(400).send("On deliverOrder: id não encontrado ou inválido!");
+    }
+
+    try {
+        const { rows : checkOrder } = await findOrderById(id);
+
+        if (checkOrder.length === 0) {
+            return res.status(404).send("On deliverOrder: nenhum pedido foi encontrado!");
+        }
+
+        await updateDeliverStatus(id);
+        res.sendStatus(204);
+    } catch (err) {
+        res.status(500).send("On deliverOrder: " + err);
     }
 }
