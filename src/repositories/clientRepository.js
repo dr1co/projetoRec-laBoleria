@@ -30,3 +30,16 @@ export async function insertClient(client) {
         ]
     );
 }
+
+export async function findClientOrders(id) {
+    return connection.query(`
+        SELECT
+            orders.id AS "orderId", orders.quantity, orders."createdAt", orders."totalPrice", cakes.name AS "cakeName"
+        FROM orders
+        JOIN cakes ON cakes.id = orders."cakeId"
+        WHERE orders."clientId" = $1
+        ORDER BY orders."createdAt" DESC
+    `,
+        [id]
+    );
+}
