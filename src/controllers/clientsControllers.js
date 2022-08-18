@@ -22,7 +22,7 @@ export async function getClientOrders(req, res) {
         const { rows: result } = await findClientOrders(id);
         
         if (result.length === 0) {
-            return res.status(404).send("On getClientOrders: nenhum pedido foi encontrado!");
+            return res.status(404).send("On getClientOrders: nenhum pedido foi encontrado ou cliente não encontrado!");
         }
 
         res.status(200).send(result);
