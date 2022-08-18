@@ -6,7 +6,7 @@ import { placeOrder, getOrders, getSingleOrder, deliverOrder } from '../controll
 
 const ordersRouter = express.Router();
 
-ordersRouter.post("/orders", validateSchema(orderSchema), validateOrder, placeOrder);
+ordersRouter.post("/order", validateSchema(orderSchema), validateOrder, placeOrder);
 ordersRouter.get("/orders", getOrders);
 ordersRouter.get("/orders/:id", getSingleOrder);
 ordersRouter.patch("/order/:id", deliverOrder);
