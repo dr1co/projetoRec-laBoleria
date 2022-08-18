@@ -21,7 +21,7 @@ export async function findOrders(date) {
                 clients.id AS "clientId", clients.name AS "clientName", clients.address, clients.phone,
                 cakes.id AS "cakeId", cakes.name AS "cakeName", cakes.price, cakes.description, cakes.image,
                 flavours.name AS flavour,
-                orders.id AS "orderId", orders."createdAt", orders.quantity, orders."totalPrice"
+                orders.id AS "orderId", orders."createdAt", orders.quantity, orders."totalPrice", orders."isDelivered"
             FROM orders
             JOIN clients ON clients.id = orders."clientId"
             JOIN cakes ON cakes.id = orders."cakeId"
@@ -45,4 +45,22 @@ export async function findOrders(date) {
             ORDER BY orders."createdAt" DESC
         `);
     }
+}
+
+export async function findOrderById(id) {
+    return connection.query(`
+    SELECT
+        clients.id AS "clientId", clients.name AS "clientName", clients.address, clients.phone,
+        cakes.id AS "cakeId", cakes.name AS "cakeName", cakes.price, cakes.description, cakes.image,
+        flavours.name AS flavour,
+        orders.id AS "orderId", orders."createdAt", orders.quantity, orders."totalPrice", orders."isDelivered"
+    FROM orders
+    JOIN clients ON clients.id = orders."clientId"
+    JOIN cakes ON cakes.id = orders."cakeId"
+    JOIN flavours ON flavours.id = cakes."flavourId"
+    WHERE orders.id = $1
+    ORDER BY orders."createdAt" DESC
+    `,
+        [id]
+    );
 }
