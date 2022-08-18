@@ -1,5 +1,5 @@
 import { findFlavourById } from '../repositories/flavoursRepository.js';
-import { findCake } from '../repositories/cakeRepository.js';
+import { findCakeByName } from '../repositories/cakeRepository.js';
 import isValidURL from './validateUrl.js';
 
 export async function validateCake(req, res, next) {
@@ -16,7 +16,7 @@ export async function validateCake(req, res, next) {
             return res.status(404).send("On validateCake: sabor de bolo não encontrado!");
         }
 
-        const { rows: checkCake } = await findCake(cake.name);
+        const { rows: checkCake } = await findCakeByName(cake.name);
 
         if (checkCake.length > 0) {
             return res.status(409).send("On validateCake: nome de bolo já existente!");

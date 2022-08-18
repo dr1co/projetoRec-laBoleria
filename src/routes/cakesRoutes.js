@@ -6,6 +6,6 @@ import { addCake } from '../controllers/cakesControllers.js';
 
 const cakesRouter = express.Router();
 
-cakesRouter.post("/cakes", validateSchema(cakeSchema), validateCake, addCake)
+cakesRouter.post("/cakes", validateSchema(cakeSchema), validateCake, addCake);
 
 export default cakesRouter;

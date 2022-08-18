@@ -1,12 +1,21 @@
 import connection from '../databases/postgres.js';
 
-export async function findCake(name) {
+export async function findCakeByName(name) {
     return connection.query(`
         SELECT * FROM "cakes"
         WHERE name = $1
     `,
         [name]
     )
+}
+
+export async function findCakeById(id) {
+    return connection.query(`
+        SELECT * FROM "cakes"
+        WHERE id = $1
+    `,
+        [id]
+    );
 }
 
 export async function insertCake(cake) {

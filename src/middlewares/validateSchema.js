@@ -5,7 +5,7 @@ export default function validateSchema(schema) {
         const { error } = schema.validate(body, { abortEarly: false});
 
         if (error) {
-            return res.status(400).send(error.details.map(detail => detail.message));
+            return res.status(400).send("On validateSchema" + error.details.map(detail => detail.message));
         }
 
         next();

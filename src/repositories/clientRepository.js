@@ -1,11 +1,20 @@
 import connection from '../databases/postgres.js';
 
-export async function findClient(phone) {
+export async function findClientByPhone(phone) {
     return connection.query(`
         SELECT * FROM "clients"
         WHERE phone = $1
     `,
         [phone]
+    );
+}
+
+export async function findClientById(id) {
+    return connection.query(`
+        SELECT * FROM "clients"
+        WHERE id = $1
+    `,
+        [id]
     );
 }
 

@@ -1,6 +1,6 @@
 import connection from '../databases/postgres.js';
 
-export async function findFlavour(flavour) {
+export async function findFlavourByName(flavour) {
     return connection.query(`
         SELECT * FROM "flavours"
         WHERE flavours.name = $1
