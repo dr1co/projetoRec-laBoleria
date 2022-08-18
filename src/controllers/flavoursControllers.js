@@ -4,7 +4,7 @@ export async function addFlavour(req, res) {
     const flavour = res.locals.flavour
 
     try {
-        const { rows: result } = await insertFlavour(flavour);
+        await insertFlavour(flavour);
 
         res.sendStatus(201);
     } catch (err) {

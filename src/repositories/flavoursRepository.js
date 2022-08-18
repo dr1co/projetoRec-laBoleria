@@ -9,6 +9,15 @@ export async function findFlavour(flavour) {
     );
 }
 
+export async function findFlavourById(id) {
+    return connection.query(`
+        SELECT * FROM "flavours"
+        WHERE flavours.id = $1
+    `,
+        [id]
+    );
+}
+
 export async function insertFlavour(flavour) {
     return connection.query(`
         INSERT INTO "flavours" ("name")
